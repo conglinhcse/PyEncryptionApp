@@ -24,7 +24,6 @@ class Root(Tk):
         self.key = ''
         self.filename = ''
         self.foldername = ''
-        # self.wm_iconbitmap('icon.ico')
  
         self.labelFrame = ttk.LabelFrame(self, text = "Open File")
         self.labelFrame.grid(column = 0, row = 1, padx = 20, pady = 20)
@@ -215,7 +214,7 @@ class Root(Tk):
 
     def encrypt(self, key, infile, size_file = 4096):
 
-        (fsz, size_file, outfile, count) = PythonEncryptionApp.encrypt(key, infile)
+        (fsz, size_file, outfile, count) = Encryption.encrypt(key, infile)
         self.scrollText.insert(tk.INSERT, '[File Name]:\t{}\n'.format(infile))
         progress =0
         while count > 0:
@@ -231,7 +230,7 @@ class Root(Tk):
 
     def decrypt(self, key, infile, size_file = 4096):
         key = self.getKey()
-        (check, fsz, size_file, outfile, count) = PythonEncryptionApp.decrypt(key, infile)
+        (check, fsz, size_file, outfile, count) = Encryption.decrypt(key, infile)
         if not check:
             return check
         progress = 0
@@ -248,7 +247,7 @@ class Root(Tk):
         return check
 
     def verifyFile(self, originalFile, outfile):
-        (check, hashOriginalFile, hashOutFile) = PythonEncryptionApp.verifyFile(originalFile, outfile)
+        (check, hashOriginalFile, hashOutFile) = Encryption.verifyFile(originalFile, outfile)
         self.scrollText.insert(tk.INSERT, '[PRE HASH]:\t{}\n'.format(hashOriginalFile))
         self.scrollText.insert(tk.INSERT, '[NET HASH]:\t{}\n'.format(hashOutFile))
         if check:
